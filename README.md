@@ -7,55 +7,55 @@ Jabones Scarlatti es una aplicación web desarrollada en PHP que permite la vent
 ## Funcionalidades
 
 ## Administrador
-- [ ] Altas de productos
-- [ ] Bajas de productos
-- [ ] Control stock (si ya no hay más productos mostrar no stock y no bajar a -1)
-- [ ] Almacenar imágenes
-- [ ] Login
-  - [ ] Mail y contraseña
+- [x] Altas de productos
+- [x] Bajas de productos
+- [x] Control stock (si ya no hay más productos mostrar no stock y no bajar a -1)
+- [x] Almacenar imágenes
+- [x] Login
+  - [x] Mail y contraseña
 
 ## Cliente
-- [ ] Comprar en tienda
-- [ ] Registro
-  - [ ] Mail y contraseña
-- [ ] Consulta datos (se debe paginar)
+- [x] Comprar en tienda
+- [x] Registro
+  - [x] Mail y contraseña
+- [x] Consulta datos (se debe paginar)
 
 ## Invitado
-- [ ] Consultar datos
+- [x] Consultar datos
 
 ## Base de Datos
-- [ ] Modificaciones
-- [ ] Se hace desde PHP
+- [x] Modificaciones
+- [x] Se hace desde PHP
 
 ## Pendientes
-- [ ] Carrito de compra
-- [ ] Añadir productos por cantidad (2 artículos por cliente/mes)
-- [ ] Modificar cantidad de productos (2 unidades por compra)
-- [ ] Eliminar productos del carrito
-- [ ] Listar productos añadidos y fecha estimada de la entrega
-- [ ] Finalización/entrega del pedido
-- [ ] Mostrar importe
-- [ ] Mostrar artículos
-- [ ] Mostrar fecha estimada de entrega
-- [ ] Albarán PDF
-- [ ] Enviar albarán
-- [ ] Cliente
-- [ ] Departamento de química
+- [x] Carrito de compra
+- [x] Añadir productos por cantidad (2 artículos por cliente/mes)
+- [x] Modificar cantidad de productos (2 unidades por compra)
+- [x] Eliminar productos del carrito
+- [x] Listar productos añadidos y fecha estimada de la entrega
+- [x] Finalización/entrega del pedido
+- [x] Mostrar importe
+- [x] Mostrar artículos
+- [x] Mostrar fecha estimada de entrega
+- [x] Albarán PDF
+- [x] Enviar albarán
+- [x] Cliente
+- [x] Departamento de química
 
 ## Aclaraciones
-- [ ] Itemcesta y cesta es lo mismo
-- [ ] Envío correo automático
-- [ ] Tabla administrador (correo y contraseña)
+- [x] Itemcesta y cesta es lo mismo
+- [x] Envío correo automático
+- [x] Tabla administrador (correo y contraseña)
 - [ ] Lista de deseos cuando ya no puede comprar más
 - [ ] Guardar los productos que ya no se pueden comprar y que haya un registro
-- [ ] Tipo decimal (4,2)
-- [ ] Tipo date
+- [x] Tipo decimal (4,2)
+- [x] Tipo date
 
 ## Pendientes no Asignados
-- [ ] En un fichero constante
-- [ ] Correo departamento de química
-- [ ] Número de días para siguiente pedido
-- [ ] Fecha de entrega 7 días
+- [x] En un fichero constante
+- [x] Correo departamento de química
+- [x] Número de días para siguiente pedido
+- [x] Fecha de entrega 7 días
 
 ### Base de Datos
 
