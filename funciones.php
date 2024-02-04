@@ -124,7 +124,7 @@ function enviarEmail($destinatarios, $asunto, $mensaje, $rutaPDFCompleta, $usuar
         $mail->Body = $mensaje;
 
         // Adjuntar el archivo PDF
-        $mail->addAttachment($rutaPDFCompleta, 'document.pdf');
+        $mail->addAttachment($rutaPDFCompleta, 'albaran_pedido_' . $pedidoID . '.pdf');
 
         if (!$mail->send()) {
             echo $mail->ErrorInfo;
@@ -138,19 +138,6 @@ function enviarEmail($destinatarios, $asunto, $mensaje, $rutaPDFCompleta, $usuar
     }
 }
 
-function generarNombrePDF($email, $fechaPedido) {
-    // Limpiar el email para evitar problemas con caracteres no permitidos en nombres de archivos
-    $emailLimpio = preg_replace('/[^a-zA-Z0-9]+/', '', $email);
-    
-    // Formatear la fecha del pedido para agregarla al nombre del archivo
-    $fechaPedidoFormateada = (new DateTime($fechaPedido))->format('Ymd_His');
-
-    // Concatenar el email y la fecha formateada para obtener el nombre del PDF
-    $pdfNombre = 'albaran_' . $emailLimpio . '_' . $fechaPedidoFormateada . '.pdf';
-
-    return $pdfNombre;
-}
-
 function generarAlbaranPDF($pedidoID) {
     // Obtener la información del pedido y los elementos asociados
     $infoPedido = obtenerInfoPedido($pedidoID);
@@ -160,57 +147,95 @@ function generarAlbaranPDF($pedidoID) {
         function Header() {
             $this->SetFont('Arial', 'B', 12);
             $this->Cell(80);
-            $this->Cell(30, 10, 'Albaran', 1, 0, 'C');
+            $this->Cell(30, 10, iconv('UTF-8', 'windows-1252','Albarán'), 1, 0, 'C');
             $this->Ln(20);
         }
 
         function Footer() {
             $this->SetY(-15);
             $this->SetFont('Arial', 'I', 8);
-            $this->Cell(0, 10, 'Página ' . $this->PageNo(), 0, 0, 'C');
+            $this->Cell(0, 10, iconv('UTF-8', 'windows-1252','Página ') . $this->PageNo(), 0, 0, 'C');
         }
     }
 
-    // Crear instancia de PDF
-    $pdf = new PDF();
-    $pdf->AddPage();
+// Crear instancia de PDF
+$pdf = new PDF();
+$pdf->AddPage();
 
-  // Contenido del albarán
-  $pdf->SetFont('Arial', 'B', 12);
-  $pdf->Cell(0, 10, 'Numero de Pedido: ' . $infoPedido[0]['pedidoID'], 0, 1);
-  $pdf->Cell(0, 10, 'Fecha del Pedido: ' . $infoPedido[0]['fechaPedido'], 0, 1);
+// Agregar logo en el lado derecho
+$logoPath = 'logo/logo.png';  // Reemplaza con la ruta real de tu logo
+$logoWidth = 60;  // Ajusta el ancho del logo según tu diseño
 
-  // Mostrar información del cliente
-  $pdf->Cell(0, 10, 'Cliente: ' . $infoPedido[0]['nombreCliente'], 0, 1);
-  $pdf->Cell(0, 10, 'Dirección: ' . $infoPedido[0]['direccionCliente'], 0, 1);
-  $pdf->Cell(0, 10, 'Código Postal: ' . $infoPedido[0]['cpCliente'], 0, 1);
-    
+// Calcular la posición X para el logo en el lado derecho
+$logoX = $pdf->GetPageWidth() - $logoWidth - 10;  // 10 es el espacio desde el borde derecho
 
-    $pdf->Ln(10);
+$pdf->Image($logoPath, $logoX, 10, $logoWidth);  // Ajusta las coordenadas y el tamaño según tu diseño
 
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->Cell(40, 10, 'Producto', 1, 0);
-    $pdf->Cell(30, 10, 'Cantidad', 1, 0);
-    $pdf->Cell(30, 10, 'Precio Unitario', 1, 0);
-    $pdf->Cell(30, 10, 'Precio Total', 1, 1);
 
-    $pdf->SetFont('Arial', '', 10);
+// Contenido del albarán
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', 'Número de Pedido: ' . $infoPedido[0]['pedidoID']), 0, 'L');
+$pdf->MultiCell(0, 10, 'Fecha del Pedido: ' . $infoPedido[0]['fechaPedido'], 0, 'L');
 
-    $totalCompra = 0;  // Inicializar el total de la compra
+// Mostrar información del cliente
+$pdf->MultiCell(0, 10, 'Cliente: ' . $infoPedido[0]['nombreCliente'], 0, 'L');
+$pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', 'Dirección: ' . $infoPedido[0]['direccionCliente']), 0, 'L');
+$pdf->MultiCell(0, 10, iconv('UTF-8', 'windows-1252', 'Código Postal: ' . $infoPedido[0]['cpCliente']), 0, 'L');
 
-    foreach ($infoPedido as $producto) {
-        $pdf->Cell(40, 10, iconv('UTF-8', 'ISO-8859-1', $producto['nombreProducto']), 1, 0);
-        $pdf->Cell(30, 10, $producto['cantidad'], 1, 0);
-        $pdf->Cell(30, 10, $producto['precioProducto'], 1, 0);
-        $pdf->Cell(30, 10, $producto['precioTotal'], 1, 1);
+$pdf->Ln(10);
 
-        $totalCompra += $producto['precioTotal'];  // Sumar al total de la compra
-    }
+$pdf->SetFont('Arial', 'B', 10);
 
-    // Agregar fila nueva con colspan para el precio total
-    $pdf->Cell(100, 10, '', 0, 0);  // Celda vacía
-    $pdf->Cell(30, 10, 'Total', 1, 0);
-    $pdf->Cell(0, 10, $totalCompra . ' €', 1, 1);
+// Encabezados de la tabla
+$pdf->SetFont('Arial', 'B', 10);
+$columnWidths = array(50, 20, 30, 30);
+$columnHeaders = array('Producto', 'Cantidad', 'Precio Unitario', 'Precio Total');
+
+// Calcular la posición X para centrar la tabla
+$tableX = ($pdf->GetPageWidth() - array_sum($columnWidths)) / 2;
+
+// Establecer la posición X para cada celda de encabezado
+$currentX = $tableX;
+foreach ($columnWidths as $width) {
+    $pdf->SetX($currentX);
+    $pdf->Cell($width, 10, current($columnHeaders), 1, 0, 'C');
+    $currentX += $width; // Incrementar la posición X para la próxima celda
+    next($columnHeaders);
+}
+$pdf->Ln();
+
+$pdf->SetFont('Arial', '', 10);
+
+$totalCompra = 0;  // Inicializar el total de la compra
+
+foreach ($infoPedido as $producto) {
+    // Contenido de la tabla
+    $currentX = $tableX; // Restablecer la posición X para cada línea
+    $pdf->SetX($currentX);
+    $pdf->Cell($columnWidths[0], 10, iconv('UTF-8', 'windows-1252', $producto['nombreProducto']), 1, 0);
+    $currentX += $columnWidths[0]; // Incrementar la posición X para la próxima celda
+    $pdf->SetX($currentX);
+    $pdf->Cell($columnWidths[1], 10, $producto['cantidad'], 1, 0, 'C');
+    $currentX += $columnWidths[1]; // Incrementar la posición X para la próxima celda
+    $pdf->SetX($currentX);
+    $pdf->Cell($columnWidths[2], 10, $producto['precioProducto'] . iconv('UTF-8', 'windows-1252',' €'), 1, 0, 'C');
+    $currentX += $columnWidths[2]; // Incrementar la posición X para la próxima celda
+    $pdf->SetX($currentX);
+    $pdf->Cell($columnWidths[3], 10, $producto['precioTotal'] . iconv('UTF-8', 'windows-1252',' €'), 1, 1, 'C');
+
+    $totalCompra += $producto['precioTotal'];  // Sumar al total de la compra
+}
+
+// Fila con colspan para el precio total
+$pdf->SetFont('Arial', 'B', 10);
+$currentX = $tableX; // Restablecer la posición X para la fila de total
+$pdf->SetX($currentX);
+$pdf->Cell(array_sum($columnWidths) - $columnWidths[3], 10, 'Total', 1, 0, 'C');  // Resta el ancho de la última columna
+$currentX += (array_sum($columnWidths) - $columnWidths[3]); // Incrementar la posición X para la próxima celda
+$pdf->SetX($currentX);
+$pdf->Cell($columnWidths[3], 10, iconv('UTF-8', 'windows-1252', $totalCompra . ' €'), 1, 1, 'C');
+
+
 
     // Guardar o mostrar el PDF 
     $pdfPath = 'albaran_pedido_' . $pedidoID . '.pdf';
@@ -224,7 +249,7 @@ function generarAlbaranPDF($pedidoID) {
     $destinatarios [] = "depquimica@domenico.es";
 
     //===============Descomentar y probar en clase========================
-    //function enviarEmail($destinatarios, $asunto, $mensaje, $pdf, $usuario, $pass);
+    //function enviarEmail($destinatarios, $asunto, $mensaje, $pdfPath, $usuario, $pass);
 }
 
 

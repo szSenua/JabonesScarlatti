@@ -14,6 +14,7 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            overflow: hidden; 
         }
 
         nav {
@@ -47,7 +48,22 @@
             font-size: 72px;
         }
 
+        .ri-checkbox-fill{
+            font-size: 72px;
+            color: #3C8D2F;
+        }
+
     .errores {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+   }
+
+
+   .exito-container {
     height: 100dvh;
     display: flex;
     flex-direction: column;

@@ -56,6 +56,7 @@ $totalItemsCesta = $resultCantidadItemsCesta['totalItemsCesta'];
 //var_dump("Total items cesta: ".$totalItemsCesta);
 //var_dump("Total items pedido: " . $totalItems);
 $errores = array();
+$exito = array();
 
 $realizaCompra = false;
 
@@ -66,6 +67,7 @@ if($totalItems >= 2){
 
 if($totalItems == 1 && $totalItemsCesta == 1){
     $realizaCompra = true;
+    
 
 } 
 
@@ -82,10 +84,12 @@ if($totalItems == 0 && $totalItemsCesta > 2){
 
 if($totalItems == 0 && $totalItemsCesta == 2){
     $realizaCompra = true;
+    
 }
 
 if($totalItems == 0 && $totalItemsCesta == 1){
     $realizaCompra = true;
+    
 
 }
 
@@ -145,21 +149,27 @@ if ($realizaCompra) {
    
 
         //Generar Albarán
-        $pdfNombre = generarNombrePDF($email, $fechaPedido);
         generarAlbaranPDF($pedidoID);
 
         // Limpiar la cesta en la sesión después de completar la compra
         unset($_SESSION['cesta']);
+
+        // Redirigir a la página de confirmación de compra
+        header("Location: confirmacion_compra.php?pedidoID=" . $pedidoID . "&fechaEntrega=" . urlencode($fechaEntrega));
+        exit();
+    }
+
+
     }
 } else{
     if (!empty($errores)) {
         session_start();
         $_SESSION['errores'] = $errores;
         header("Location: mostrar_errores.php");
-        exit(); // Asegúrate de detener la ejecución después de redirigir
+        exit(); 
     }
 }
-}
+
 
 // Cerrar la conexión
 require_once 'desconecta.php';
