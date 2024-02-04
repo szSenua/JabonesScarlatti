@@ -238,8 +238,17 @@ $pdf->Cell($columnWidths[3], 10, iconv('UTF-8', 'windows-1252', $totalCompra . '
 
 
     // Guardar o mostrar el PDF 
-    $pdfPath = 'albaran_pedido_' . $pedidoID . '.pdf';
-    $pdf->Output('F', $pdfPath); // Guardar el PDF en el servidor
+$nombreArchivo = 'albaran_pedido_' . $pedidoID . '.pdf';
+$rutaCarpeta = 'albaran/';
+
+// Verificar si la carpeta existe, y si no, crearla
+if (!file_exists($rutaCarpeta)) {
+    mkdir($rutaCarpeta, 0777, true); // Se otorgan permisos completos
+}
+
+$pdfPath = $rutaCarpeta . $nombreArchivo; // Ruta completa de la carpeta
+
+$pdf->Output('F', $pdfPath);
     // $pdf->Output(); // Mostrar el PDF en el navegador
 
     $asunto = "Pedido " . $pedidoID;
