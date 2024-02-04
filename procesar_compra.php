@@ -52,13 +52,16 @@ $resultCantidadItemsCesta = $stmtCantidadItemCesta->fetch(PDO::FETCH_ASSOC);
 //Obtengo la cantidad total de items de la cesta
 $totalItemsCesta = $resultCantidadItemsCesta['totalItemsCesta'];
 
-var_dump("Total items cesta: ".$totalItemsCesta);
-var_dump("Total items pedido: " . $totalItems);
+//Testing
+//var_dump("Total items cesta: ".$totalItemsCesta);
+//var_dump("Total items pedido: " . $totalItems);
+$errores = array();
 
 $realizaCompra = false;
 
 if($totalItems >= 2){
     $realizaCompra = false;
+    $errores [] = "Has superado el límite de dos artículos por mes.";
 }
 
 if($totalItems == 1 && $totalItemsCesta == 1){
@@ -68,11 +71,13 @@ if($totalItems == 1 && $totalItemsCesta == 1){
 
 if($totalItems == 1 && $totalItemsCesta > 1){
     $realizaCompra = false;
+    $errores [] = "Sólo puedes comprar un artículo";
 
 } 
 
 if($totalItems == 0 && $totalItemsCesta > 2){
     $realizaCompra = false;
+    $errores [] = "No puedes superar el límite de dos artículos por mes";
 }
 
 if($totalItems == 0 && $totalItemsCesta == 2){
@@ -145,6 +150,13 @@ if ($realizaCompra) {
 
         // Limpiar la cesta en la sesión después de completar la compra
         unset($_SESSION['cesta']);
+    }
+} else{
+    if (!empty($errores)) {
+        session_start();
+        $_SESSION['errores'] = $errores;
+        header("Location: mostrar_errores.php");
+        exit(); // Asegúrate de detener la ejecución después de redirigir
     }
 }
 }

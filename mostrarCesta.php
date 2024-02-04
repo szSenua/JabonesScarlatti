@@ -135,6 +135,7 @@ try {
         }
 
         .mensaje-vacio {
+            font-weight: bolder;
             margin-top: 20px;
             text-align: center;
             font-size: 18px;

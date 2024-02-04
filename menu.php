@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
     
     <style>
         body {
@@ -38,6 +42,20 @@
             color: #000;
             padding: 10px;
         }
+
+        i{
+            font-size: 72px;
+        }
+
+    .errores {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+   }
+
     </style>
     <title></title>
 </head>

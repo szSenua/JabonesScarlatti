@@ -48,14 +48,23 @@ $pedidos = obtenerPedidos($con);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        #panel-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 2em;
+        }
         table {
-            width: 100%;
+            width: 96%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
         table, th, td {
-            border: 1px solid #ccc;
+           
+            border: 1px solid #342042;
         }
 
         th, td {
@@ -63,8 +72,13 @@ $pedidos = obtenerPedidos($con);
             text-align: left;
         }
 
+        td{
+            background: #fff;
+        }
+
         th {
-            background-color: #f2f2f2;
+            background-color: #342042;
+            color: white;
         }
 
         .btn-accion {
@@ -99,6 +113,7 @@ $pedidos = obtenerPedidos($con);
 
 <body>
 
+
     <h2>Panel de Administración - Productos</h2>
 
     <!-- Botón para crear un nuevo producto -->
@@ -106,6 +121,7 @@ $pedidos = obtenerPedidos($con);
         <a href="crear_producto.php"><button class="btn-accion btn-crear">Crear Nuevo Producto</button></a>
     </form>
 
+    <div id="panel-container">
     <table>
         <thead>
             <tr>
@@ -124,7 +140,7 @@ $pedidos = obtenerPedidos($con);
                     <td><img src="<?= $producto['imagen']; ?>" alt="Imagen del producto"></td>
                     <td><?= $producto['nombre']; ?></td>
                     <td><?= $producto['descripcion']; ?></td>
-                    <td><?= $producto['precio']; ?></td>
+                    <td><?= $producto['precio']; ?> €</td>
                     <td>
                         <!-- Botones de acciones (actualizar, eliminar) -->
                         <form action="actualizar_producto.php?id=<?php echo $producto['productoID']; ?>" method="post" style="display: inline;">
@@ -170,6 +186,7 @@ $pedidos = obtenerPedidos($con);
             <?php endforeach; ?>
         </tbody>
     </table>
+            </div>
 
     <?php
     // Cerrar la conexión
