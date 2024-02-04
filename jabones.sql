@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2024 a las 03:38:43
+-- Tiempo de generación: 04-02-2024 a las 17:00:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -101,13 +101,6 @@ CREATE TABLE `itempedido` (
   `unidades` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `itempedido`
---
-
-INSERT INTO `itempedido` (`itemPedidoID`, `pedidoID`, `productoID`, `unidades`) VALUES
-(44, 33, 2, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -122,13 +115,6 @@ CREATE TABLE `pedidos` (
   `totalPedido` int(11) NOT NULL,
   `entregado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `pedidos`
---
-
-INSERT INTO `pedidos` (`pedidoID`, `email`, `fechaPedido`, `fechaEntrega`, `totalPedido`, `entregado`) VALUES
-(33, 'sasha@gmail.com', '2024-02-04', '2024-02-11', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +142,12 @@ INSERT INTO `productos` (`productoID`, `nombre`, `descripcion`, `peso`, `precio`
 (4, 'Coconut Sandalwood ', 'A qué huele: a playa de madera flotante al anochecer.\r\n\r\nNotas olfativas: palma de coco, sándalo lujoso, almizcle cálido y jazmín.', 0.5, 8.95, 'imagenes/026790543.jpg'),
 (5, 'Cozy Vanilla Almond ', 'A qué huele: cálido, a nuez y muy dulce.\r\n\r\nNotas olfativas: orquídea de vainilla, almendras azucaradas y almizcle dulce.', 0.5, 7.95, 'imagenes/026686011.jpg'),
 (6, 'Vanilla Birch ', 'A qué huele: un tranquilo paseo por el bosque.\r\n\r\nNotas de fragancia: abedul blanco, vainilla de Madagascar y sándalo cálido.', 0.5, 7.95, 'imagenes/026774721.jpg'),
-(7, 'Sea and Sandstone', 'A qué huele: las relajantes olas del océano rompiendo contra las rocas junto al mar.', 0.3, 7.95, 'imagenes/026686018.jpg');
+(7, 'Sea and Sandstone', 'A qué huele: las relajantes olas del océano rompiendo contra las rocas junto al mar.', 0.3, 7.95, 'imagenes/026686018.jpg'),
+(8, 'Fiji White Sands ', 'A qué huele: el día de playa más dulce y luminoso de todos los tiempos.\r\nNotas olfativas: caña de azúcar recién cortada, nectarina blanca y sándalo.\r\n', 0.3, 8.95, 'imagenes/028000208.jpg'),
+(9, 'Raspberry Tangerine ', 'A qué huele: una mezcla de frutas cítricas y brillantes.\r\nNotas de fragancia: frambuesas silvestres, mandarina fresca y ralladura de limón.', 0.3, 7.95, 'imagenes/026793203.jpg'),
+(10, 'Crystal Blue Coast', 'A qué huele: playas de arena blanca y agua cristalina y deslumbrante.\r\nNotas de fragancia: palmeras ventosas y manzana fresca', 0.3, 7.95, 'imagenes/026790487.jpg'),
+(11, 'White T-Shirt ', 'A qué huele: tu camiseta favorita, recién lavada, colgada para secar en un prado soleado. Notas de fragancia: pera crujiente y sándalo suave.', 0.5, 8.95, 'imagenes/026779862.jpg'),
+(12, 'Black Oak & Patchouli', 'A qué huele: un escape dulce y místico.\r\nNotas de fragancia: azúcar hilado, ámbar dorado y pachulí rubio.', 0.5, 8.95, 'imagenes/026790765.jpg');
 
 --
 -- Índices para tablas volcadas
@@ -218,31 +209,31 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `cesta`
 --
 ALTER TABLE `cesta`
-  MODIFY `cestaID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `cestaID` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `itemcesta`
 --
 ALTER TABLE `itemcesta`
-  MODIFY `itemCestaID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `itemCestaID` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `itempedido`
 --
 ALTER TABLE `itempedido`
-  MODIFY `itemPedidoID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `itemPedidoID` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `pedidoID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `pedidoID` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `productoID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `productoID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas

@@ -14,7 +14,7 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            overflow: hidden; 
+            
         }
 
         nav {
@@ -64,7 +64,7 @@
 
 
    .exito-container {
-    height: 100dvh;
+    height: 95dvh;
     display: flex;
     flex-direction: column;
     align-items: center;

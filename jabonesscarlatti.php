@@ -107,7 +107,7 @@ while($fila = $stmt->fetch(PDO::FETCH_ASSOC)){
     echo '<h2>' . $fila['nombre'] . '</h2>';
     echo '<img src=" ' . $fila['imagen'] . '">';
     echo '<p class="titulo">Descripción:<br>' . $fila['descripcion'] . '</p>';
-    echo '<p class="titulo">Peso:' . $fila['peso'] . ' kg</p>';
+    echo '<p class="titulo">Peso: ' . $fila['peso'] . ' kg</p>';
     echo '<p class="titulo">Precio: ' . $fila['precio'] . ' €</p>';
 
     if ($rol === 'cliente' || $rol === 'administrador') {
