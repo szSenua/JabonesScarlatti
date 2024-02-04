@@ -2,6 +2,7 @@
 require_once 'conecta.php';
 require_once 'funciones.php';
 
+
 $email = '';
 $contrasena = '';
 $errores = array();

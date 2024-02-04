@@ -1,0 +1,11 @@
+//Comprobamos si el cliente ha realizado algún pedido en los últimos 30 días
+
+$queryComprobar = "SELECT COUNT(pedidoID) FROM pedidos WHERE fechaPedido BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW();";
+
+//Preparo la consulta
+$stmt = $con->prepare($queryComprobar);
+$stmt->execute();
+
+
+//Obtengo los pedidos realizados por el cliente
+$pedidosRealizados = $stmt->fetchColumn();

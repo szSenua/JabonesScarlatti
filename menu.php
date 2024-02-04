@@ -46,19 +46,20 @@
 
 <?php
 
+//Propago la sesión
 session_start();
 
-// Otras verificaciones y código aquí
 
 $rol = isset($_SESSION['tipoUsuario']) ? $_SESSION['tipoUsuario'] : '';
 $nombre = isset($_SESSION['nombreUsuario']) ? $_SESSION['nombreUsuario'] : 'invitado';
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 
 
 ?>
 
 <nav>
     
-    <a href="listar_jabones.php">Consultar Productos</a>
+    <a href="jabonesscarlatti.php">Consultar Productos</a>
     
 
     <?php
@@ -69,7 +70,7 @@ $nombre = isset($_SESSION['nombreUsuario']) ? $_SESSION['nombreUsuario'] : 'invi
     }
 
     if($rol === 'cliente') {
-        echo '<a href="Carrito.php">Carrito</a>';
+        echo '<a href="mostrarCesta.php">Carrito</a>';
     }
 
     // Verifica si hay un rol para mostrar el enlace correcto
@@ -81,7 +82,5 @@ $nombre = isset($_SESSION['nombreUsuario']) ? $_SESSION['nombreUsuario'] : 'invi
     ?>
     
 </nav>
-
-
 </body>
 </html>
