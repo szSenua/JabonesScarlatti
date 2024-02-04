@@ -250,6 +250,71 @@ function obtenerInfoPedido($pedidoID){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function pintaRegistroSolicitanteConParam($nombre, $contrasena, $direccion, $email, $cp, $telefono, $errores) {
+    echo '<div class="registro"><form action="registro.php" method="post" class="form">';
+    
+    // Mostrar errores solo si la variable $errores no está vacía
+    if (!empty($errores)) {
+        echo '<div class="alert alert-danger" role="alert">
+            <ul>';
+        foreach ($errores as $error) {
+            echo '<li>' . $error . '</li>';
+        }
+        echo '</ul></div>';
+    }
+
+    echo '
+        <h2>Registro</h2>
+        
+        
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" value="' . htmlspecialchars($nombre) . '" >
+
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" name="contrasena" value="' . htmlspecialchars($contrasena) . '" >
+
+            <label for="direccion">Direccion:</label>
+            <input type="text" name="direccion" value="' . htmlspecialchars($direccion) . '" >
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="' . htmlspecialchars($email) . '" >
+
+            <label for="cp">Código Postal:</label>
+            <input type="text" name="cp" value="' . htmlspecialchars($cp) . '" >
+
+            <label for="telefono">Telefono:</label>
+            <input type="text" name="telefono" value="' . htmlspecialchars($telefono) . '" >
+        
+
+        
+        <input type="submit" value="Registrar" class="submit">
+   
+    
+      </form>
+    </div>';
+}
+
+//función para validar el correo
+
+function validarCorreo($correo) {
+    return filter_var($correo, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+//Función para validar un teléfono fijo o móvil
+function validarTelefono($telefono) {
+    // Eliminar cualquier caracter que no sea dígito
+    $numero = preg_replace("/[^0-9]/", "", $telefono);
+
+    // Comprobar si el número tiene un formato válido para teléfonos españoles
+    if (preg_match("/^(34)?[6789]\d{8}$/", $numero)) {
+        return true;
+    }
+
+    return false;
+}
+
+
+
 ?>
 </body>
 </html>
