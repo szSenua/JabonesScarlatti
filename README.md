@@ -46,8 +46,6 @@ Jabones Scarlatti es una aplicación web desarrollada en PHP que permite la vent
 - [x] Itemcesta y cesta es lo mismo
 - [x] Envío correo automático
 - [x] Tabla administrador (correo y contraseña)
-- [ ] Lista de deseos cuando ya no puede comprar más
-- [ ] Guardar los productos que ya no se pueden comprar y que haya un registro
 - [x] Tipo decimal (4,2)
 - [x] Tipo date
 
