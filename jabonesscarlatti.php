@@ -5,7 +5,7 @@ require_once 'menu.php';
 require_once 'conecta.php';
 
 // Configuración de la paginación
-$elementosPorPagina = 4;
+$elementosPorPagina = 3; //4 para la resolución de casa
 $paginaActual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $elementosPorPagina;
 
@@ -44,6 +44,14 @@ $stmt->execute();
             width: 360px;
             background-color: #fff;
         }
+
+        /*Comentar esto para la pantalla de casa */
+        .card img{
+            /* Modificar por la pantalla de clase */
+            width: 35%;
+            height: 35%;
+        }
+
         .btn-carrito {
             font-weight: bolder;
             padding: 8px 12px;

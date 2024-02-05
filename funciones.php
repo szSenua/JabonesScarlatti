@@ -97,7 +97,7 @@ function pintaLoginconParam($email, $contrasena, $errores) {
 
 //función para mandar el email
 
-function enviarEmail($destinatarios, $asunto, $mensaje, $rutaPDFCompleta, $usuario, $pass) {
+function enviarEmail($destinatario, $asunto, $mensaje, $rutaPDFCompleta, $usuario, $pass) {
     include_once('PHPMailer-master/src/PHPMailer.php');
     include_once('PHPMailer-master/src/SMTP.php');
 
@@ -114,17 +114,13 @@ function enviarEmail($destinatarios, $asunto, $mensaje, $rutaPDFCompleta, $usuar
     $mail->Password = $pass;
     $mail->setFrom("christina@domenico.es");
     //$mail->SMTPDebug = 2;  // Enable verbose debug output
-
-    if (is_array($destinatarios)) {
-        foreach ($destinatarios as $destinatario) {
-            $mail->addAddress($destinatario);
-        }
+    $mail->addAddress($destinatario);
 
         $mail->Subject = $asunto;
         $mail->Body = $mensaje;
 
         // Adjuntar el archivo PDF
-        $mail->addAttachment($rutaPDFCompleta, 'albaran_pedido_' . $pedidoID . '.pdf');
+        $mail->addAttachment($rutaPDFCompleta);
 
         if (!$mail->send()) {
             echo $mail->ErrorInfo;
@@ -136,7 +132,6 @@ function enviarEmail($destinatarios, $asunto, $mensaje, $rutaPDFCompleta, $usuar
             echo '<br><a href="index.php"><button name="volver">Volver</button></a>';
         }
     }
-}
 
 function generarAlbaranPDF($pedidoID) {
     // Obtener la información del pedido y los elementos asociados
@@ -251,14 +246,15 @@ $pdfPath = $rutaCarpeta . $nombreArchivo; // Ruta completa de la carpeta
 $pdf->Output('F', $pdfPath);
     // $pdf->Output(); // Mostrar el PDF en el navegador
 
-    $asunto = "Pedido " . $pedidoID;
-    $destinatarios = array();
+    $asunto = "Nuevo pedido con ID " . $pedidoID;
+    $mensaje = "Nuevo pedido entrante";
+    
 
     //============Crear cuenta en axigen======================
-    $destinatarios [] = "depquimica@domenico.es";
+    $destinatario = "depquimica@domenico.es";
 
     //===============Descomentar y probar en clase========================
-    //function enviarEmail($destinatarios, $asunto, $mensaje, $pdfPath, $usuario, $pass);
+    enviarEmail($destinatario, $asunto, $mensaje, $pdfPath, "christina@domenico.es", "admin123");
 }
 
 
